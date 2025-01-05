@@ -1,0 +1,93 @@
+# Rust specific
+/target/
+/Cargo.lock
+
+# C++ and CMake specific files
+/build/
+/cmake-build-debug/
+/cmake-build-release/
+CMakeLists.txt.user
+CMakeUserPresets.json
+
+# Object files and binaries
+*.obj
+*.o
+*.lo
+*.slo
+
+# Dependency and build files
+*.d
+*.dSYM/
+*.dylib
+
+# Static Libraries
+*.lib
+*.a
+*.lai
+
+# Shared Libraries
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# IDE specific files
+# Visual Studio Code
+.vscode/
+.vscode/settings.json
+
+# JetBrains (CLion, IntelliJ, etc.)
+.idea/
+*.iml
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
+
+# Backup and temporary files
+*.bak
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
+
+# Logs and caches
+*.log
+*.cache
+*.pid
+*.seed
+
+# Coverage and testing
+coverage/
+lcov-report/
+*.prof
+*.profdata
+*.gcno
+*.gcda
+*.gcov
+
+# Python and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv/
+env/
+env.bak/
+venv.bak/
+
+# Dependencies and CMake files
+/deps
+/CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+*.hpp#
+*.cpp#
+*.hpp~
+*.cpp~
+
+
+# Added by cargo
+
+/target
