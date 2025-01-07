@@ -1,8 +1,8 @@
 use std::env;
 use std::ffi::OsString;
-use std::mem;
 use std::os::unix::ffi::OsStrExt;
 
+#[allow(dead_code)]
 fn abracadabra() {
     println!("Abracadabra! Function called!");
 }

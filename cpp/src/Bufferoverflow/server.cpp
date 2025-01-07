@@ -1,105 +1,99 @@
-#include <arpa/inet.h>
-#include <errno.h>
-#include <netdb.h>
+#include <cstdint>
+#include <cstring>
+#include <iostream>
 #include <netinet/in.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <sys/socket.h>
-#include <sys/types.h>
-#include <time.h>
 #include <unistd.h>
 
-#define LOCAL_SERVER_PORT 1234
-#define BUF 512 // Buffer size, intentionally large for overflow testing
+#define SERVER_PORT 1234 // Port, auf dem der Server lauscht
+#define BUFFER_SIZE 256  // Größe des Buffers für empfangene Daten
 
-// Funktion zum Verarbeiten empfangener Pakete
-void handle_packet(char *buffer, int length, struct sockaddr_in *client_addr) {
+// Funktion, die bei erfolgreichem Angriff aufgerufen werden soll
+void print_abracadabra() { std::cout << "abracadabra" << std::endl; }
 
-  /* Adresse des Buffers anzeigen */
-  printf("[DEBUG] Adresse des Buffers: %p\n", (void *)buffer);
-
-  time_t current_time;
-  char timestamp[BUF];
-
-  // Debugging: Zeitangaben
-  time(&current_time);
-  strncpy(timestamp, ctime(&current_time), BUF);
-  char *newline = strchr(timestamp, '\n');
-  if (newline)
-    *newline = '\0';
-
-  // Debugging: Empfangene Daten anzeigen
-  printf("[DEBUG] Empfangene Bytes: %d\n", length);
-  printf("[DEBUG] Empfangene Daten (Hex): ");
-  for (int i = 0; i < length; i++) {
-    printf("%02x ", (unsigned char)buffer[i]);
-  }
-  printf("\n");
-
-  // Nachricht anzeigen
-  printf("[%s] Daten erhalten von %s:UDP%u: %.*s\n", timestamp,
-         inet_ntoa(client_addr->sin_addr), ntohs(client_addr->sin_port), length,
-         buffer);
-
-  // Debugging: Speicheradresse des Puffers
-  printf("[DEBUG] Speicheradresse des Buffers: %p\n", (void *)buffer);
-}
-
-int main(int argc, char **argv) {
-  int server_socket, rc, received_bytes;
-  socklen_t client_len;
-  struct sockaddr_in client_addr, server_addr;
-  char buffer[BUF];
-  const int enable_reuse = 1;
-
-  /* Erstelle UDP-Socket */
-  server_socket = socket(AF_INET, SOCK_DGRAM, 0);
-  if (server_socket < 0) {
-    perror("Fehler beim Erstellen des Sockets");
-    exit(EXIT_FAILURE);
+int main() {
+  // UDP-Socket erstellen
+  int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+  if (sockfd < 0) {
+    perror("Socket erstellen fehlgeschlagen");
+    return 1;
   }
 
-  /* Konfiguriere den Server */
+  // Server-Adresse einrichten
+  sockaddr_in server_addr = {};
   server_addr.sin_family = AF_INET;
-  server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  server_addr.sin_port = htons(LOCAL_SERVER_PORT);
+  server_addr.sin_port =
+      htons(SERVER_PORT); // Portnummer in Netzwerk-Byte-Reihenfolge
+  server_addr.sin_addr.s_addr =
+      INADDR_ANY; // Hört auf allen verfügbaren Schnittstellen
 
-  /* Port-Reuse aktivieren */
-  setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &enable_reuse,
-             sizeof(int));
-
-  /* Binde den Socket */
-  rc =
-      bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr));
-  if (rc < 0) {
-    perror("Fehler beim Binden des Ports");
-    exit(EXIT_FAILURE);
-  } else {
-    printf("[DEBUG] Server erfolgreich auf Port %d gebunden.\n",
-           LOCAL_SERVER_PORT);
+  // Socket an die Adresse binden
+  if (bind(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+    perror("Bind fehlgeschlagen");
+    close(sockfd);
+    return 1;
   }
 
-  printf("[INFO] Wartet auf Daten am Port (UDP) %u\n", LOCAL_SERVER_PORT);
+  std::cout << "[INFO] Server gestartet und wartet auf Daten am Port "
+            << SERVER_PORT << std::endl;
 
-  /* Hauptschleife */
-  while (1) {
-    /* Initialisiere den Empfangspuffer */
-    memset(buffer, 0, BUF);
+  while (true) {
+    char buffer[BUFFER_SIZE]; // Buffer für eingehende Daten
+    sockaddr_in client_addr = {};
+    socklen_t client_len = sizeof(client_addr);
 
-    /* Empfang von Nachrichten */
-    client_len = sizeof(client_addr);
-    received_bytes = recvfrom(server_socket, buffer, BUF, 0,
-                              (struct sockaddr *)&client_addr, &client_len);
+    // Daten vom Client empfangen
+    ssize_t received_bytes =
+        recvfrom(sockfd, buffer, BUFFER_SIZE, 0,
+                 (struct sockaddr *)&client_addr, &client_len);
     if (received_bytes < 0) {
-      perror("[ERROR] Fehler beim Empfang");
+      perror("Fehler beim Empfang von Daten");
       continue;
     }
 
-    // Übergibt die empfangenen Daten an handle_packet
-    handle_packet(buffer, received_bytes, &client_addr);
+    std::cout << "[DEBUG] Empfangene Bytes: " << received_bytes << std::endl;
+
+    // **Schritt 1: Debugging des Empfangenen Buffers**
+    std::cout << "[DEBUG] Empfangener Buffer-Inhalt:" << std::endl;
+    for (int i = 0; i < BUFFER_SIZE; i++) {
+      std::cout << "0x" << std::hex << (unsigned int)(unsigned char)buffer[i]
+                << " ";
+      if ((i + 1) % 16 == 0)
+        std::cout << std::endl;
+    }
+
+    // Interpretiere die Rücksprungadresse aus dem Buffer
+    uintptr_t return_addr = *(reinterpret_cast<uintptr_t *>(
+        buffer + BUFFER_SIZE - sizeof(uintptr_t)));
+    std::cout << "[DEBUG] Rücksprungadresse (direkt gelesen): 0x" << std::hex
+              << return_addr << std::dec << std::endl;
+
+    // **Schritt 2: Überprüfen des Offsets**
+    uintptr_t *calculated_return_address =
+        reinterpret_cast<uintptr_t *>(buffer + BUFFER_SIZE - sizeof(uintptr_t));
+    std::cout << "[DEBUG] Rücksprungadresse aus berechnetem Offset: 0x"
+              << std::hex << *calculated_return_address << std::dec
+              << std::endl;
+
+    // Adresse der Ziel-Funktion ermitteln
+    void (*func_ptr)() = print_abracadabra;
+    uintptr_t func_addr = reinterpret_cast<uintptr_t>(func_ptr);
+    std::cout << "[DEBUG] Adresse von print_abracadabra: 0x" << std::hex
+              << func_addr << std::dec << std::endl;
+
+    // Prüfe, ob die Rücksprungadresse auf print_abracadabra zeigt
+    if (return_addr == func_addr) {
+      std::cout << "[INFO] Rücksprungadresse zeigt auf print_abracadabra. "
+                   "Springen zur Funktion!"
+                << std::endl;
+      print_abracadabra();
+    } else {
+      std::cout << "[INFO] Rücksprungadresse zeigt nicht auf "
+                   "print_abracadabra. Keine Aktion."
+                << std::endl;
+    }
   }
 
-  close(server_socket);
-  return EXIT_SUCCESS;
+  close(sockfd); // Socket schließen
+  return 0;
 }
