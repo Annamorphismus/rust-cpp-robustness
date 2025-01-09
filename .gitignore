@@ -2,6 +2,9 @@
 /target/
 /Cargo.lock
 
+# Notes
+notes.md
+
 # C++ and CMake specific files
 /build/
 /cmake-build-debug/
