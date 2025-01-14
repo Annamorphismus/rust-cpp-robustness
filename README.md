@@ -36,3 +36,10 @@ Compile C++ Client
 
         g++ -fno-stack-protector -z execstack -O0 -g -o client client.cpp
         ./client 88
+
+
+# Use After Free
+## Szenario: Dateiverwaltungs-System mit Datei-Cache
+Das System soll häufig verwendete Dateien im Speicher halten, um den Zugriff zu beschleunigen. 
+Der Cache verwaltet Dateiobjekte, die geöffnet, gelesen und geschlossen werden können. 
+Ein Fehler in der Verwaltung der Lebensdauer dieser Dateiobjekte kann dazu führen, dass Zeiger auf bereits geschlossene und freigegebene Dateiobjekte existieren, was zu Dangling Pointern und Use-After-Free (UAF) Schwachstellen führt.
