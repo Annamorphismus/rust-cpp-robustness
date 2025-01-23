@@ -7,8 +7,9 @@ notes.md
 
 # C++ and CMake specific files
 /build/
-/cmake-build-debug/
-/cmake-build-release/
+**/build/
+**/cmake-build-debug/
+**/cmake-build-release/
 CMakeLists.txt.user
 CMakeUserPresets.json
 
