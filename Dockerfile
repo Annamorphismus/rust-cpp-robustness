@@ -6,7 +6,7 @@ RUN zypper refresh && \
     zypper update -y
 
 # Installiere zusätzliche Pakete
-RUN zypper install -y gcc gcc-c++ make gdb python3 git vim curl
+RUN zypper install -y gcc gcc-c++ make gdb python3 git vim curl cmake
 
 # Installiere Rust (verwende rustup für die Installation)
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -23,15 +23,6 @@ WORKDIR /home/
 COPY . .
 
 
-# Kompiliere Server und Exploit (C++)
-WORKDIR /home/cpp/src/Bufferoverflow/
-RUN g++ -fno-stack-protector -z execstack -g -o server server.cpp
-RUN g++ -fno-stack-protector -z execstack -g -o exploit exploit.cpp
-
-# Baue Rust-Projekt
-#WORKDIR /home/rust/
-#ENV RUSTFLAGS="-C force-frame-pointers=yes -C no-stack-check -C no-stack-protector"
-# RUN cargo build --release
 
 # Setup file
 WORKDIR /home/
