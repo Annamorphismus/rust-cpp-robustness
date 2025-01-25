@@ -4,7 +4,6 @@
 #include <thread>
 #include <vector>
 
-// Globale Variable
 int counter = 0;
 
 // Funktion, die den Zähler inkrementiert
@@ -35,3 +34,5 @@ void simulate_race_condition()
     std::cout << "Erwarteter Zähler: 10000\n"; // 10 Threads x 1000 Inkremente
     std::cout << "Tatsächlicher Zähler: " << counter << std::endl;
 }
+
+int main() { simulate_race_condition(); }

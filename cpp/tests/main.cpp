@@ -1,9 +1,7 @@
 #include <gtest/gtest.h>
 
-// Beispiel-Testfall
-TEST(SampleTest, SimpleCase)
+int main(int argc, char** argv)
 {
-    EXPECT_EQ(1, 1); // Testet, ob 1 gleich 1 ist
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
-
-// Hauptfunktion wird von GTest bereitgestellt

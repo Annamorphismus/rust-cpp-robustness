@@ -1,30 +1,22 @@
-cmake_minimum_required(VERSION 3.25)
-project(tests)
-
+# Setze den C++-Standard
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Füge den include-Ordner hinzu
-include_directories(include)
+# Finde Google Test
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 
-# Konfiguration für Debug Build mit ASAN
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g -O1 -fno-omit-frame-pointer -fno-stack-protector")
-    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
-endif()
-
-# Konfiguration für Release Build ohne ASAN (Exploit)
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -no-pie -fno-stack-protector -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0 -g -O1")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -no-pie")
-endif()
-
-
-
-add_executable(tests
-    unittest.cpp
+# Testziel erstellen
+add_executable(run_tests
     main.cpp
+   # unittest.cpp
+    ../src/race-condition/race_condition.cpp
+    ../src/race-condition/sync.cpp
 )
 
-target_include_directories(tests PUBLIC ${CMAKE_SOURCE_DIR}/include)
+# Google Test-Bibliotheken und pthread hinzufügen
+target_link_libraries(run_tests ${GTEST_LIBRARIES} pthread)
+
+# Tests in den Build-Prozess integrieren
+enable_testing()
+add_test(NAME UnitTests COMMAND run_tests)

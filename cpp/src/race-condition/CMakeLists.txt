@@ -20,12 +20,12 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -no-pie")
 endif()
 
+# Füge ein ausführbares Ziel für race_condition.cpp hinzu
+add_executable(race-condition race_condition.cpp)
 
+# Füge ein ausführbares Ziel für sync.cpp hinzu
+add_executable(sync sync.cpp)
 
-add_executable(race-condition
-    main.cpp
-    race_condition.cpp
-    sync.cpp
-)
-
+# Beide ausführbaren Dateien verwenden denselben Include-Ordner
 target_include_directories(race-condition PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(sync PUBLIC ${CMAKE_SOURCE_DIR}/include)

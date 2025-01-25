@@ -15,6 +15,9 @@ add_subdirectory(src/deadlocks)
 add_subdirectory(src/race-condition)
 
 add_subdirectory(src/use-after-free)
+add_subdirectory(src/memory-leak)
+
+#add_subdirectory(tests)
 
 # Optionale Tests hinzufügen (falls in cpp/tests/)
 #enable_testing()
