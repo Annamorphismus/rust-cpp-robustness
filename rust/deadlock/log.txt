@@ -1,0 +1,4 @@
+Thread 2 protokolliert einen Fehler.
+Thread 2 protokolliert einen Fehler.
+Thread 1 hat eine Konfigurationsänderung geloggt.
+Thread 2 protokolliert einen Fehler.

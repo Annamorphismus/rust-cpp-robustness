@@ -1,5 +1,21 @@
 use std::cell::RefCell;
 use std::rc::Rc;
+//----------------------------------Szenario------------------------------------------
+/*
+ * Das Programm simuliert ein Task-Management-System, in dem ein Scheduler
+ * (Scheduler) Tasks (Task) verwaltet. Ein Memory Leak tritt auf, wenn die Tasks eine
+ * starke Referenz (Rc) zurück zum Scheduler halten, während der Scheduler ebenfalls
+ * starke Referenzen auf die Tasks hält. Dadurch entsteht ein Referenzzyklus,
+ * der verhindert, dass der Speicher jemals freigegeben wird.
+ */
+
+//----------------------------------Ausgabe------------------------------------------
+/*
+ * Die Referenzzähler des Schedulers und der Tasks bleiben überhöht,
+ * da sie sich gegenseitig referenzieren
+
+ * Zwei Mutex-Objekte: Eins für die Konfigurationsdatei und eins für das Log
+*/
 
 struct Task {
     name: String, // Behalte das Feld "name"

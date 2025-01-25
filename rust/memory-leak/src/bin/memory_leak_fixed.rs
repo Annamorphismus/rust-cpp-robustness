@@ -1,6 +1,16 @@
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
+//----------------------------------Szenario------------------------------------------
+/*
+ * In diesem Programm wird ein Memory Leak durch die Verwendung von `Rc` und `Weak`
+ * verhindert.
+ * Der `Task` hält eine schwache Referenz (`Weak<Scheduler>`) auf den `Scheduler`,
+ * wodurch der Referenzzyklus zwischen `Scheduler` und `Task` aufgelöst wird.
+ * Der `Scheduler` verwaltet die Tasks mit starken Referenzen (`Rc<Task>`), während die
+ * Rückverweise der Tasks auf den Scheduler den Referenzzähler nicht erhöhen.
+ */
+
 struct Task {
     name: String,
     scheduler: RefCell<Option<Weak<Scheduler>>>, // Schwache Referenz

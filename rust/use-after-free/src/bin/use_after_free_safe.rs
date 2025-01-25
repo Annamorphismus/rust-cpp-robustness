@@ -4,6 +4,25 @@ use std::io::{self, BufRead, Write};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
+//----------------------------------Szenario------------------------------------------
+/*
+ * Dieses Programm simuliert ein Dateiverwaltungssystem, in dem mehrere Threads
+ * gleichzeitig auf eine gemeinsame Datei zugreifen können. Ein Thread liest
+ * die Datei, während ein anderer versucht, die Datei zu schließen und aus
+ * dem Cache zu entfernen.
+ */
+//----------------------------------Ablauf------------------------------------------
+/*
+ * - Der `FileManager` verwaltet geöffnete Dateien in einem Cache (`HashMap`), geschützt
+ *   durch einen `Mutex`. Dadurch können mehrere Threads sicher auf die Dateien zugreifen.
+ * - Ein Thread liest eine Zeile aus der Datei, während ein anderer Thread versucht,
+ *   die Datei zu schließen und aus dem Cache zu entfernen.
+ */
+//----------------------------------Ergebnis------------------------------------------
+/*
+ * - Die Synchronisation verhindert Datenkorruption,
+ */
+
 struct FileManager {
     file_cache: Arc<Mutex<HashMap<String, Arc<Mutex<File>>>>>,
 }

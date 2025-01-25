@@ -24,7 +24,7 @@ endif()
 add_executable(race-condition race_condition.cpp)
 
 # Füge ein ausführbares Ziel für sync.cpp hinzu
-add_executable(sync sync.cpp)
+add_executable(sync race_condition_safe.cpp)
 
 # Beide ausführbaren Dateien verwenden denselben Include-Ordner
 target_include_directories(race-condition PUBLIC ${CMAKE_SOURCE_DIR}/include)

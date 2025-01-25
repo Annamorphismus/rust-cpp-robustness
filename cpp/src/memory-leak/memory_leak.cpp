@@ -3,6 +3,16 @@
 #include <string>
 #include <vector>
 
+//----------------------------------Szenario------------------------------------------
+/*
+ * Dieses Programm simuliert ein Scheduler-System, in dem ein Scheduler (`Scheduler`)
+ * eine Liste von Tasks (`Task`) verwaltet. Jede Task referenziert zurück auf den Scheduler.
+ * Da sowohl der Scheduler als auch die Tasks mit starken Referenzen (`std::shared_ptr`)
+ * arbeiten, entsteht ein zyklischer Abhängigkeitsgraph (Referenzzyklus).
+ * Dieser Zyklus verhindert, dass der Speicher für den Scheduler und die Tasks
+ * freigegeben wird, was zu einem Memory Leak führt.
+ */
+
 class Scheduler; // Vorwärtsdeklaration
 
 class Task

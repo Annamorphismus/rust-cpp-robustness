@@ -3,6 +3,16 @@
 #include <string>
 #include <vector>
 
+//----------------------------------Szenario------------------------------------------
+/*
+ * In diesem Programm wird ein Memory Leak durch die Verwendung von `std::weak_ptr`
+ * verhindert.
+ * Die Tasks speichern nur schwache Referenzen (`std::weak_ptr`) auf den Scheduler,
+ * wodurch der Referenzzyklus zwischen `Scheduler` und `Task` aufgelöst wird.
+ * Der Scheduler nutzt `std::enable_shared_from_this`, um eine starke Referenz
+ * zu sich selbst zu erstellen, die sicher an die Tasks übergeben wird.
+ */
+
 class Scheduler; // Vorwärtsdeklaration
 
 class Task

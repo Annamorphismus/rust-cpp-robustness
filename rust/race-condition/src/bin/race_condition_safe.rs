@@ -1,5 +1,20 @@
 use std::sync::{Arc, Mutex};
 use std::thread;
+//----------------------------------Szenario------------------------------------------
+/*
+ * Dieses Programm verhindert eine Race Condition, indem der Zugriff auf den gemeinsamen * Zähler (`counter`)
+ * durch einen `Mutex` synchronisiert wird. Dadurch kann immer nur ein Thread
+ * gleichzeitig den Zähler inkrementieren.
+ */
+//----------------------------------Mechanismen---------------------------------------
+/*
+ * `Mutex`: Synchronisiert den Zugriff und stellt atomare Updates sicher.
+ * `Arc`: Erlaubt das sichere Teilen des Zählers zwischen Threads.
+ */
+//----------------------------------Ergebnis------------------------------------------
+/*
+ * Der Zähler erreicht den erwarteten Wert von `10000`, da keine Dateninkonsistenz entsteht.
+ */
 
 fn increment_counter_sync(counter: &Arc<Mutex<i32>>) {
     for _ in 0..1000 {

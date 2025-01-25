@@ -21,7 +21,11 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 # Executable hinzufügen
-add_executable(deadlocks main.cpp)
+add_executable(deadlocks deadlock.cpp)
+add_executable(deadlocks_safe deadlock_safe.cpp)
+
 
 # Ziel-spezifische Include-Pfade hinzufügen
 target_include_directories(deadlocks PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(deadlocks_safe PUBLIC ${CMAKE_SOURCE_DIR}/include)
+

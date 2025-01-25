@@ -1,0 +1,14 @@
+[package]
+name = "deadlock"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "deadlock"
+path = "src/bin/deadlock.rs"
+
+[[bin]]
+name = "deadlock_safe"
+path = "src/bin/deadlock_safe.rs"
