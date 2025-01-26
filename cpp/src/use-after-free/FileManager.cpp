@@ -2,6 +2,20 @@
 #include <fstream>
 #include <iostream>
 
+//----------------------------------Szenario------------------------------------------
+/*
+ * Dieses Szenario demonstriert ein Use-After-Free-Problem mithilfe eines FileManagers:
+ * Der FileManager verwaltet geöffnete Dateien in einem Cache, wobei Dateien mit
+ * `std::shared_ptr` freigegeben werden. Ein roher Zeiger (`rawPtr`) wird auf eine Datei
+ * zurückgegeben, die später aus dem Cache entfernt und freigegeben wird.
+ *
+ * **Exploit:**
+ * Nach der Freigabe der Ressource wird der Speicherbereich des rohen Zeigers überschrieben
+ * (`std::strcpy`), was ein klassisches Undefined Behavior erzeugt. Angreifer könnten diesen
+ * Zustand ausnutzen, um den Speicher gezielt zu manipulieren, etwa um Schadcode einzuschleusen
+ * oder sensible Daten zu lesen.
+ */
+
 // Konstruktor für die Klasse FileManager
 // Initialisiert die Klasse, aber keine spezifischen Ressourcen.
 FileManager::FileManager()
@@ -101,7 +115,6 @@ void FileManager::closeFile(const std::string& filename)
 }
 
 // Gibt einen rohen Zeiger auf die Datei zurück, wenn sie geöffnet und im Cache vorhanden ist.
-// Achtung: Die Verwendung von rohen Zeigern kann gefährlich sein (z. B. Dangling Pointers).
 std::fstream* FileManager::getFilePointer(const std::string& filename)
 {
     // Sichert den Zugriff auf den Datei-Cache (Thread-Sicherheit).

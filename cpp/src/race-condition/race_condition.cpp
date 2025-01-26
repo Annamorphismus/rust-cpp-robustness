@@ -13,9 +13,9 @@
  */
 //----------------------------------Ablauf------------------------------------------
 /*
- * - 10 Threads werden gestartet, die jeweils 1000-mal den `counter` inkrementieren.
- * - Eine zufällige Verzögerung (`rand() % 10`) simuliert reale Bedingungen, in denen
- *   Threads asynchron arbeiten und sich gegenseitig überschreiben können.
+ * 10 Threads werden gestartet, die jeweils 1000-mal den `counter` inkrementieren.
+ * Eine zufällige Verzögerung (`rand() % 10`) simuliert reale Bedingungen, in denen
+ * Threads asynchron arbeiten und sich gegenseitig überschreiben können.
  */
 //----------------------------------Ergebnis------------------------------------------
 /*
