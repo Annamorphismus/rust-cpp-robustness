@@ -4,3 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+[[bin]]
+name = "memory_leak"
+path = "src/memory_leak.rs"
+
+[[bin]]
+name = "memory_leak_fixed"
+path = "src/memory_leak_fixed.rs"

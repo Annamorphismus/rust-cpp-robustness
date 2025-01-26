@@ -2,3 +2,5 @@ Thread 1 aktualisiert die Konfiguration.
 Thread 1 aktualisiert die Konfiguration.
 Thread 1 aktualisiert die Konfiguration.
 Thread 2 hat die Konfiguration überprüft.
+Thread 1 aktualisiert die Konfiguration.
+Thread 2 hat die Konfiguration überprüft.

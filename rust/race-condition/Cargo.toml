@@ -6,8 +6,8 @@ edition = "2021"
 [dependencies]
 [[bin]]
 name = "race_condition"
-path = "src/bin/race_condition.rs"
+path = "src/race_condition.rs"
 
 [[bin]]
 name = "race_condition_safe"
-path = "src/bin/race_condition_safe.rs"
+path = "src/race_condition_safe.rs"

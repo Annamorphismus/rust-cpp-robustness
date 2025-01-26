@@ -7,8 +7,8 @@ edition = "2021"
 
 [[bin]]
 name = "deadlock"
-path = "src/bin/deadlock.rs"
+path = "src/deadlock.rs"
 
 [[bin]]
 name = "deadlock_safe"
-path = "src/bin/deadlock_safe.rs"
+path = "src/deadlock_safe.rs"
