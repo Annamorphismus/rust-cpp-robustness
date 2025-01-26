@@ -37,3 +37,14 @@ Check ASLR:
         cargo run --bin [binary]  
 
 
+# Bufferoverflow
+1. Compile C++ file in Rust folder:
+          g++ -fno-stack-protector -z execstack -O0 -g -o client client.cpp
+
+2. The offset size must be entered here as a transfer parameter. In Docker, the value is:
+           - for the C++ version: “56”
+           - for the Rust version: “88”
+  
+Please note that the address of the abracadabra function may need to be adjusted.
+
+

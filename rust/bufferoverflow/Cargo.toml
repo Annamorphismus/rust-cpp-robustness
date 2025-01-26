@@ -5,3 +5,7 @@ edition = "2021"
 
 [dependencies]
 libc = "0.2.169"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"

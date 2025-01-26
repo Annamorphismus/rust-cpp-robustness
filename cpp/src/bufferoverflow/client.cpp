@@ -9,6 +9,28 @@
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 1234
 
+//----------------------------------Szenario------------------------------------------
+/**
+ * Dieses Szenario beschreibt die Interaktion zwischen einem UDP-Server und einem Client.
+ * Der Server empfängt Nachrichten und verarbeitet sie, während der Client Daten sendet.
+ *
+ * Der Server enthält eine Funktion `vulnerable_function`, die unsicher ist, da sie Daten
+ * ohne Längenüberprüfung kopiert. Dies führt zu einer potenziellen
+ * Buffer-Overflow-Sicherheitslücke.
+ * Ziel des Exploits ist es, die Funktion `print_abracadabra` aufzurufen.
+ */
+
+//----------------------------------Ablauf------------------------------------------
+/*
+ * 1. Der Server wird gestartet und lauscht auf Port 1234.
+ * 2. Der Client verbindet sich mit dem Server und sendet Nachrichten.
+ * 3. Der Server empfängt die Nachrichten und verarbeitet sie in der Funktion
+ * `vulnerable_function`.
+ * 4. Wenn ein Angreifer speziell gestaltete Daten sendet, kann er möglicherweise die
+ * Sicherheitslücke ausnutzen, um unautorisierten Code auszuführen oder die Ziel-Funktion
+ * aufzurufen.
+ */
+
 int main(int argc, char* argv[])
 {
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
