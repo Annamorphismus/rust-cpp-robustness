@@ -11,8 +11,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Debug Build Konfiguration mit AddressSanitizer (ASAN)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g -O1 -fno-omit-frame-pointer -fno-stack-protector")
-    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O1 -fno-omit-frame-pointer -fno-stack-protector")
 endif()
 
 # Release Build Konfiguration für Exploit

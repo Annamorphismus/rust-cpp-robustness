@@ -1,14 +1,16 @@
-# Verwende das heruntergeladene Image als Basis
-FROM opensuse/leap:latest
+# Verwende openSUSE Tumbleweed als Basis
+FROM opensuse/tumbleweed
 
-# Aktualisiere Pakete
-RUN zypper refresh && \
-    zypper update -y
+# Aktualisiere alle Pakete (optional, da Tumbleweed immer aktuell ist)
+RUN zypper refresh && zypper update -y
 
-# Installiere zusätzliche Pakete
+# Installiere die benötigten Tools
 RUN zypper install -y gcc gcc-c++ make gdb python3 git vim curl cmake
 
-# Installiere Rust (verwende rustup für die Installation)
+# Optional: Überprüfe die GCC-Version
+RUN gcc --version && g++ --version
+
+# Installiere Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
@@ -22,10 +24,7 @@ WORKDIR /home/
 # Kopiere C++- und Rust-Dateien
 COPY . .
 
-
-
 # Setup file
-WORKDIR /home/
 RUN chmod +x ./setup.sh
 
 # Standardbefehl
