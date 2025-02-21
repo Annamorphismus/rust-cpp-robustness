@@ -1,10 +1,30 @@
 # rust-cpp-rubustness
 Implementation of my master project
 
+
 # Start Docker 
 
+## Build
+
         docker build -t rust-cpp-robustness .
-        docker run -it --privileged --network=host rust-cpp-robustness
+        
+## Start
+
+        docker run -it  --memory=512m \                                                                              1 ✘  22:33:16 
+                --memory-swap=512m \
+                --oom-kill-disable=false \
+                --pids-limit=100 \
+                --cpus=1 \
+                --log-opt max-size=5m \
+                --log-opt max-file=2 \
+                --cap-add=SYS_PTRACE \
+                --cap-add=SYS_ADMIN \
+                --security-opt seccomp=unconfined \
+                --security-opt apparmor=unconfined \
+                --tmpfs /tmp:size=64m \
+                --name buffer_overflow \
+                rust-cpp-robustness
+
 
 
 
