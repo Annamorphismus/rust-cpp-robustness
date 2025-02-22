@@ -80,8 +80,8 @@ Check ASLR:
           g++ -fno-stack-protector -z execstack -O0 -g -o client client.cpp
 
 6. The offset size must be entered here as a transfer parameter. In Docker, the value is:
-           - for the C++ version: “56”
-           - for the Rust version: “88”
+      * for the C++ version: “56”
+      * for the Rust version: “88”
   
 
 
