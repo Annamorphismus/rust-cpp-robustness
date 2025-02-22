@@ -22,9 +22,12 @@ Implementation of my master project
                 --security-opt seccomp=unconfined \
                 --security-opt apparmor=unconfined \
                 --tmpfs /tmp:size=64m \
-                --name buffer_overflow \
+                --name rust-cpp-robustness \
                 rust-cpp-robustness
 
+## To start second bash:
+
+        docker exec -it buffer_overflow /bin/bash
 
 
 
@@ -57,14 +60,28 @@ Check ASLR:
         cargo run --bin [binary]  
 
 
-# Bufferoverflow
-1. Compile C++ file in Rust folder:
+# Bufferoverflow Rust
+
+1. Compile Rust file /rust/bufferoverflow/
+        
+        Cargo build
+
+2. Start Client
+    
+        Cargo run
+
+3. Start a second bash 
+   
+        docker exec -it buffer_overflow /bin/bash
+
+4. Set the adress of print_abracadabra in client.cpp
+5. Compile C++ file /rust/bufferoverflow/src/client.cpp:
+   
           g++ -fno-stack-protector -z execstack -O0 -g -o client client.cpp
 
-2. The offset size must be entered here as a transfer parameter. In Docker, the value is:
+6. The offset size must be entered here as a transfer parameter. In Docker, the value is:
            - for the C++ version: “56”
            - for the Rust version: “88”
   
-Please note that the address of the abracadabra function may need to be adjusted.
 
 
