@@ -9,3 +9,7 @@ libc = "0.2.169"
 [[bin]]
 name = "server"
 path = "src/server.rs"
+
+[[bin]]
+name = "simple_overflow"
+path = "src/simple_overflow.rs"

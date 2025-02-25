@@ -11,3 +11,4 @@ path = "src/race_condition.rs"
 [[bin]]
 name = "race_condition_safe"
 path = "src/race_condition_safe.rs"
+
