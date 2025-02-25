@@ -22,3 +22,9 @@ add_subdirectory(src/memory-leak)
 # Optionale Tests hinzufügen (falls in cpp/tests/)
 #enable_testing()
 #add_subdirectory(tests)
+
+add_custom_target(vclean
+    COMMAND ${CMAKE_COMMAND} --build . --target clean
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Bereinige das Projekt..."
+)

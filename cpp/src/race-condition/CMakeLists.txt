@@ -21,11 +21,11 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 # Füge ein ausführbares Ziel für race_condition.cpp hinzu
-add_executable(race-condition race_condition.cpp)
+add_executable(race_condition race_condition.cpp)
 
 # Füge ein ausführbares Ziel für sync.cpp hinzu
-add_executable(sync race_condition_safe.cpp)
+add_executable(race_condition_safe race_condition_safe.cpp)
 
 # Beide ausführbaren Dateien verwenden denselben Include-Ordner
-target_include_directories(race-condition PUBLIC ${CMAKE_SOURCE_DIR}/include)
-target_include_directories(sync PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(race_condition PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(race_condition_safe PUBLIC ${CMAKE_SOURCE_DIR}/include)

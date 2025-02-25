@@ -30,19 +30,16 @@ endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
 
 # Erstelle ein Ziel für den Client
-add_executable(bufferoverflow_client
+add_executable(client
     client.cpp
 )
 
 # Erstelle ein Ziel für den Server
-add_executable(bufferoverflow_server
+add_executable(server
     server.cpp
 )
 
 # Füge den zentralen Include-Ordner hinzu
-target_include_directories(bufferoverflow_client PUBLIC ${CMAKE_SOURCE_DIR}/include)
-target_include_directories(bufferoverflow_server PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(client PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(server PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
-# Falls Threads verwendet werden, muss pthread gelinkt werden
-# target_link_libraries(bufferoverflow_server pthread)
-# target_link_libraries(bufferoverflow_client pthread)

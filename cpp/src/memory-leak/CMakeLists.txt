@@ -23,9 +23,9 @@ endif()
 
 
 # Add executable for memory-leak
-add_executable(memory-leak memory_leak.cpp)
+add_executable(memory_leak memory_leak.cpp)
 
 # Add executable for memory-leak-safe
-add_executable(memory-leak-safe memory_leak_safe.cpp)
+add_executable(memory_leak_safe memory_leak_safe.cpp)
 
-target_include_directories(memory-leak PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(memory_leak PUBLIC ${CMAKE_SOURCE_DIR}/include)
