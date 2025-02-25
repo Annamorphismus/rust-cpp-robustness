@@ -24,7 +24,14 @@ endif()
 add_executable(use-after-free
     main.cpp
     FileManager.cpp
+
+)
+
+add_executable(use-after-free-safe
+    main_safe.cpp
+    FileManager_safe.cpp
 )
 
 target_include_directories(use-after-free PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
+target_include_directories(use-after-free-safe PUBLIC ${CMAKE_SOURCE_DIR}/include)

@@ -9,5 +9,5 @@ name = "memory_leak"
 path = "src/memory_leak.rs"
 
 [[bin]]
-name = "memory_leak_fixed"
-path = "src/memory_leak_fixed.rs"
+name = "memory_leak_safe"
+path = "src/memory_leak_safe.rs"

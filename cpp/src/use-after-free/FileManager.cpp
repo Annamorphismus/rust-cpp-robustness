@@ -76,7 +76,7 @@ std::string FileManager::readFile(const std::string& filename)
     // Sichert den Zugriff auf den Datei-Cache (Thread-Sicherheit).
     std::lock_guard<std::mutex> lock(cacheMutex);
 
-    // Überprüfen, ob die Datei im Cache existiert und geöffnet ist.
+    // Überprüft, ob die Datei im Cache existiert und geöffnet ist.
     auto it = fileCache.find(filename);
     if (it != fileCache.end() && it->second->is_open()) {
         std::string content;
@@ -84,7 +84,7 @@ std::string FileManager::readFile(const std::string& filename)
         std::getline(*(it->second), content);
         return content; // Gibt den gelesenen Inhalt zurück.
     } else {
-        // Gibt eine Fehlermeldung aus, wenn die Datei nicht geöffnet oder nicht im Cache ist.
+        // Gibt eine Fehlermeldung aus, wenn die Datei nicht geöffnet oder nicht im Cache.
         std::cerr << "Datei " << filename << " ist nicht geöffnet oder existiert nicht im Cache."
                   << std::endl;
         return ""; // Gibt einen leeren String zurück.

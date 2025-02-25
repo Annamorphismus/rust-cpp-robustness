@@ -97,17 +97,18 @@ fn log_error(thread_name: &str, config_mutex: Arc<Mutex<()>>, log_mutex: Arc<Mut
 fn main() {
     println!("Programm gestartet.");
 
-    // Gemeinsame Ressourcen
+    // Gemeinsame Ressourcen mit Mutex schützen
     let config_mutex = Arc::new(Mutex::new(()));
     let log_mutex = Arc::new(Mutex::new(()));
 
+    // Klone der Arc-Mutexe für die Threads erzeugen
     let thread1_config_mutex = Arc::clone(&config_mutex);
     let thread1_log_mutex = Arc::clone(&log_mutex);
 
     let thread2_config_mutex = Arc::clone(&config_mutex);
     let thread2_log_mutex = Arc::clone(&log_mutex);
 
-    // Zwei Threads starten
+    // Startet zwei Threads, die auf die Dateien zugreifen
     let thread1 = thread::spawn(move || {
         update_config("Thread 1", thread1_config_mutex, thread1_log_mutex);
     });

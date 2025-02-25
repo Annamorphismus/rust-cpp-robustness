@@ -78,8 +78,8 @@ cargo run --bin [binary]
 
 Das Repository ist in verschiedene Verzeichnisse und Dateien unterteilt, die jeweils spezifische Funktionen und Inhalte beherbergen:
 
-- **`/cpp/`**: Dieses Verzeichnis enthält den C++-Quellcode des Projekts. Hier befinden sich die Implementierungen der in C++ entwickelten Module.
-- **`/rust/`**: In diesem Verzeichnis liegt der Rust-Quellcode des Projekts. Es umfasst die Implementierungen der in Rust entwickelten Komponenten.
+- **`/cpp/`**: Dieses Verzeichnis enthält den C++-Quellcode des Projekts. Hier befinden sich die Implementierungen der in C++ entwickelten Module. Die mit "_safe" bezeichneten Dateien geben eine sichere Version an, die keine Schwachstelle enthält.
+- **`/rust/`**: In diesem Verzeichnis liegt der Rust-Quellcode des Projekts. Es umfasst die Implementierungen der in Rust entwickelten Komponenten. Die mit "_safe" bezeichneten Dateien geben eine sichere Version an, die keine Schwachstelle enthält.
 - **`.gitignore`**: Eine Konfigurationsdatei, die festlegt, welche Dateien und Verzeichnisse von der Versionskontrolle durch Git ausgeschlossen werden sollen.
 - **`Dockerfile`**: Ein Skript, das die Anweisungen zum Erstellen eines Docker-Images des Projekts enthält. Es definiert die Umgebung und die Schritte, die für den Aufbau der Anwendung erforderlich sind.
 - **`README.md`**: Diese Datei bietet eine Übersicht über das Projekt, einschließlich Anweisungen zur Installation, Nutzung und anderen relevanten Informationen.

